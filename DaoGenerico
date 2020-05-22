@@ -1,0 +1,220 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package DAO;
+
+import Modelo.ClsConexion;
+
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.table.DefaultTableModel;
+
+/**
+ *
+ * @author PC
+ */
+public class DaoGenerico extends ClsConexion {
+
+//    Ciudadano dao = new Ciudadano();
+//    Administrador dao1 = new Administrador();
+    public boolean guardar(String objeto, String tabla) {
+        System.out.println(objeto);
+
+        JsonParser parser = new JsonParser();
+        JsonObject jobject = parser.parse(objeto).getAsJsonObject();
+        Set<String> keys = jobject.keySet();
+
+        ArrayList<String> listCampos = new ArrayList(keys);
+        ArrayList<String> listValores = new ArrayList();
+        for (int i = 0; i < listCampos.size(); i++) {
+            System.out.println(listCampos.get(i));
+            listValores.add(jobject.get(listCampos.get(i)).getAsString());
+        }
+        for (int i = 0; i < listValores.size(); i++) {
+            System.out.println(listValores.get(i));
+        }
+        String consulta = "insert into " + tabla + "(";
+        Iterator<String> itrCampos = listCampos.iterator();
+
+        while (itrCampos.hasNext()) {
+            Object atributo = itrCampos.next();
+            consulta = consulta + "" + atributo.toString().toLowerCase();
+            if (itrCampos.hasNext()) {
+                consulta = consulta + ",";
+            } else {
+                consulta = consulta + ") values (";
+            }
+        }
+        Iterator<String> itrValores = listValores.iterator();
+        while (itrValores.hasNext()) {
+            Object valor = itrValores.next();
+            consulta = consulta + "'" + valor;
+            if (itrValores.hasNext()) {
+                consulta = consulta + "',";
+            } else {
+                consulta = consulta + "');";
+            }
+
+        }
+        System.out.println(consulta);
+
+        return super.ejecutar(consulta);
+    }
+
+    public boolean modificar(String Gson, String tabla, int identificador, String CampoIde) {
+
+        String consulta = "update " + tabla + " set " + CampoIde + " =" + identificador + " ,";
+
+        JsonParser parser = new JsonParser();
+        JsonObject jobject = parser.parse(Gson).getAsJsonObject();
+        Set<String> keys = jobject.keySet();
+
+        ArrayList<String> listCampos = new ArrayList(keys);
+        ArrayList<String> listValores = new ArrayList();
+        for (int i = 0; i < listCampos.size(); i++) {
+            listValores.add(jobject.get(listCampos.get(i)).getAsString());
+        }
+        Iterator<String> itrCampos = listCampos.iterator();
+        Iterator<String> itrValores = listValores.iterator();
+
+        while (itrCampos.hasNext() && itrValores.hasNext()) {
+            Object atributo = itrCampos.next();
+            Object valor = itrValores.next();
+            consulta = consulta + "" + atributo.toString().toLowerCase() + " = " + "'" + valor + "'";
+            if (itrCampos.hasNext() && itrValores.hasNext()) {
+                consulta = consulta + " ,";
+            } else {
+                consulta = consulta + " where " + CampoIde + " = " + identificador;
+            }
+
+        }
+        System.out.println(consulta);
+        return super.ejecutar(consulta);
+    }
+
+
+    public boolean eliminar(int valor, String tabla, String ideEliminar) {
+        String consulta = "delete from " + tabla + " where " + ideEliminar + "=" + valor;
+        return super.ejecutar(consulta);
+
+    }
+
+     public ArrayList buscar(int valor, String tabla, String llavePrimaria) {
+        ArrayList<String> buscar = new ArrayList<>();
+        String consulta = "select * from " + tabla + " where " + llavePrimaria + "=" + valor;
+        super.ejecutarRetorno(consulta);
+        try {
+            if (resultadoDB.next()) {
+                for (int i = 1; i < resultadoDB.getMetaData().getColumnCount() + 1; i++) {
+                    buscar.add(resultadoDB.getString(i));
+                }
+
+            }
+        } catch (SQLException ex) {
+            System.out.println("Esto se tosto");
+        }
+        System.out.println(consulta);
+        return buscar;
+
+    }
+
+    public DefaultTableModel listar(String objeto, String tabla) {
+        String consulta = "select * from " + tabla;
+        super.ejecutarRetorno(consulta);
+
+        JsonParser parser = new JsonParser();
+        JsonObject jobject = parser.parse(objeto).getAsJsonObject();
+        Set<String> keys = jobject.keySet();//cortará cualquier cadena en varias partes dependiendo del valor de su argumento de cadena
+
+        ArrayList<String> listCampos = new ArrayList(keys);
+        String[] campos = new String[listCampos.size()];
+
+        for (int i = 0; i < listCampos.size(); i++) {
+            campos[i] = listCampos.get(i);
+
+        }
+
+        Object[][] matriz = new Object[1][listCampos.size()];
+        DefaultTableModel modelo = new DefaultTableModel(matriz, campos);
+
+        try {
+            while (resultadoDB.next()) {
+                for (int i = 0; i < listCampos.size(); i++) {
+                    matriz[0][i] = resultadoDB.getObject(listCampos.get(i));
+                }
+                modelo.addRow((Object[]) matriz[0]);
+            }
+            modelo.removeRow(0);
+        } catch (SQLException e) {
+            System.out.println(e + "error listando");
+        }
+        return modelo;
+    }
+ public DefaultComboBoxModel llenarCombo(String tabla, String nombre) {
+        DefaultComboBoxModel cbx = new DefaultComboBoxModel();
+        cbx.addElement(tabla);
+
+        String consulta = "select * FROM " + tabla;
+        super.ejecutarRetorno(consulta);
+        System.out.println(consulta);
+
+        try {
+            while (resultadoDB.next()) {
+                cbx.addElement(resultadoDB.getString(nombre));
+            }
+        } catch (SQLException ex) {
+            System.out.println("esto se tosto");
+        }
+        return cbx;
+    }
+    
+    public String buscarIDEnCombo(String tabla, String nombre, String ID, String no) {
+        String consulta = "SELECT " + ID + " FROM " + tabla + " WHERE " + nombre + " ='" + no + "'";
+        super.ejecutarRetorno(consulta);
+        System.out.println(consulta);
+        String id = "";
+        try {
+            if (resultadoDB.next()) {
+
+                id = (resultadoDB.getString(ID));
+            }
+        } catch (SQLException ex) {
+            System.out.println("Esto se tosto");
+
+        }
+        return id;
+    }
+  
+
+
+   
+    
+
+ 
+
+    
+//    public int acceder(String usuario, String pass) {
+//        int cap = 0;
+//        String sql = "SELECT id_tipo FROM login WHERE nombre='" + usuario + "' AND contraseña='" + pass + "'";
+//        try {
+//            super.ejecutarRetorno(sql);
+////            Statement st = cn.createStatement();
+////            ResultSet rs = st.executeQuery(sql);
+//            while (resultadoDB.next()) {
+//                return resultadoDB.getInt("id_tipo");
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(Login2.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return cap;
+//    }
+}
