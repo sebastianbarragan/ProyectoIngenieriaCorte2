@@ -1,0 +1,396 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package DAO;
+
+import Modelo.ClsCategoria;
+import Modelo.ClsCliente;
+import Modelo.ClsConexion;
+import Modelo.ClsFactura;
+import Modelo.ClsProducto;
+import Modelo.ClsProveedor;
+import Modelo.ClsVendedor;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import java.util.ArrayList;
+import java.util.Set;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.table.DefaultTableModel;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+/**
+ *
+ * @author PC
+ */
+public class DaoGenericoTest extends ClsConexion {
+
+    public DaoGenericoTest() {
+    }
+
+    @BeforeClass
+    public static void setUpClass() {
+    }
+
+    @AfterClass
+    public static void tearDownClass() {
+    }
+
+    @Before
+    public void setUp() {
+    }
+
+    @After
+    public void tearDown() {
+    }
+
+    /**
+     * Test of guardar method, of class DaoGenerico.
+     */
+//    @Test
+//    public void testGuardar() {
+//        System.out.println("guardar");
+//        ClsProducto producto = new ClsProducto(90, "prueba", "prueba1", "2", "2");
+//        
+//        
+//        Gson gson = new Gson();
+//        String objeto = gson.toJson(producto);
+//
+//        String tabla = "producto";
+//        DaoGenerico instance = new DaoGenerico();
+//        boolean expResult = true;
+//        boolean result = instance.guardar(objeto, tabla);
+//        assertEquals(expResult, result);
+//         TODO review the generated test code and remove the default call to fail.
+//
+//    }
+//     @Test
+//    public void testGuardarCliente() {
+//        System.out.println("guardar");
+//        ClsCliente cli = new ClsCliente(514, 503, "prueba1", "2", "2","2","2");
+//        
+//        
+//        Gson gson = new Gson();
+//        String objeto = gson.toJson(cli);
+//
+//        String tabla = "cliente";
+//        DaoGenerico instance = new DaoGenerico();
+//        boolean expResult = true;
+//        boolean result = instance.guardar(objeto, tabla);
+//        assertEquals(expResult, result);
+//        // TODO review the generated test code and remove the default call to fail.
+//
+//    }
+//    
+//     public void testGuardarCategoria() {
+//        System.out.println("guardar");
+//        ClsCategoria cli = new ClsCategoria(51, "prueba1");
+//        
+//        
+//        Gson gson = new Gson();
+//        String objeto = gson.toJson(cli);
+//
+//        String tabla = "categoria";
+//        DaoGenerico instance = new DaoGenerico();
+//        boolean expResult = true;
+//        boolean result = instance.guardar(objeto, tabla);
+//        assertEquals(expResult, result);
+//        // TODO review the generated test code and remove the default call to fail.
+//
+//    }
+//  public void testGuardarProveedor() {
+//        System.out.println("guardar");
+//        ClsProveedor pro = new ClsProveedor(2, "prueba1","2","correo@gmail.com","direccion");
+//        
+//        
+//        Gson gson = new Gson();
+//        String objeto = gson.toJson(pro);
+//
+//        String tabla = "categoria";
+//        DaoGenerico instance = new DaoGenerico();
+//        boolean expResult = true;
+//        boolean result = instance.guardar(objeto, tabla);
+//        assertEquals(expResult, result);
+//        // TODO review the generated test code and remove the default call to fail.
+//
+//    }
+//   public void testGuardarVendedor() {
+//        System.out.println("guardar");
+//       ClsVendedor ve = new ClsVendedor(56, 54, "prueba1", "prueba","2","2");
+//        
+//        
+//        Gson gson = new Gson();
+//        String objeto = gson.toJson(ve);
+//
+//        String tabla = "vendedor";
+//        DaoGenerico instance = new DaoGenerico();
+//        boolean expResult = true;
+//        boolean result = instance.guardar(objeto, tabla);
+//        assertEquals(expResult, result);
+//        // TODO review the generated test code and remove the default call to fail.
+//
+//    }
+    /**
+     * Test of modificar method, of class DaoGenerico.
+     */
+//    @Test
+//    public void testModificar() {
+//        System.out.println("modificar");
+//        ClsCategoria cat = new ClsCategoria(6, "Modifico");
+//        
+//        
+//        Gson gson = new Gson();
+//        String objeto = gson.toJson(cat);
+//        
+//        String tabla = "categoriaproducto";
+//        int identificador = 6;
+//        String CampoIde = "id_categoria";
+//        DaoGenerico instance = new DaoGenerico();
+//        boolean expResult = true;
+//        boolean result = instance.modificar(objeto, tabla, identificador, CampoIde);
+//        assertEquals(expResult, result);
+//        // TODO review the generated test code and remove the default call to fail.
+//        
+//    }
+////
+//    /**
+//     * Test of eliminar method, of class DaoGenerico.
+//     */
+    @Test
+    public void testEliminar() {
+        System.out.println("eliminar");
+        int valor = 6;
+        String tabla = "categoriaproducto";
+        String ideEliminar = "id_categoria";
+        DaoGenerico instance = new DaoGenerico();
+        boolean expResult = true;
+        boolean result = instance.eliminar(valor, tabla, ideEliminar);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+       
+    }
+// /**
+//     * Test of buscar method, of class DaoGenerico.
+//     */
+//    @Test
+//    public void testBuscarCategoria() {
+//        System.out.println("buscar");
+//        int valor = 5;
+//        String e ="Verdura";
+//        String tabla = "categoriaproducto";
+//        String llavePrimaria = "id_categoria";
+//        DaoGenerico instance = new DaoGenerico();
+//        ArrayList <ClsCategoria> a = new ArrayList<ClsCategoria>();
+//        a.add( new ClsCategoria(1, "Verdura"));
+//           
+//       ArrayList expResult = a;
+//         
+//        ArrayList result = instance.buscar(valor, tabla, llavePrimaria);
+//        assertEquals(result, result);
+//        // TODO review the generated test code and remove the default call to fail.
+//       
+//    }
+
+//
+//    /**
+//     * Test of buscar method, of class DaoGenerico.
+//     */
+//    @Test
+//    public void testBuscarProveedor() {
+//        System.out.println("buscar");
+//        int valor = 1;
+//        String tabla = "proveedor";
+//        String llavePrimaria = "id_proveedor";
+//        DaoGenerico instance = new DaoGenerico();
+//        ArrayList expResult = null;
+//        ArrayList result = instance.buscar(valor, tabla, llavePrimaria);
+//        assertEquals(result, result);
+//        // TODO review the generated test code and remove the default call to fail.
+//       
+//    }
+//   @Test
+//    public void testBuscarCliente() {
+//        System.out.println("buscar");
+//        int valor = 1;
+//        String tabla = "cliente";
+//        String llavePrimaria = "id_cliente";
+//        DaoGenerico instance = new DaoGenerico();
+//        ArrayList expResult = null;
+//        ArrayList result = instance.buscar(valor, tabla, llavePrimaria);
+//        assertEquals(result, result);
+//        // TODO review the generated test code and remove the default call to fail.
+//       
+//    }
+//   @Test
+//    public void testBuscarVendedor() {
+//        System.out.println("buscar");
+//        int valor = 1;
+//        String tabla = "vendedor";
+//        String llavePrimaria = "id_vendedor";
+//        DaoGenerico instance = new DaoGenerico();
+//        ArrayList expResult = null;
+//        ArrayList result = instance.buscar(valor, tabla, llavePrimaria);
+//        assertEquals(result, result);
+//        // TODO review the generated test code and remove the default call to fail.
+//       
+//    }
+//       @Test
+//    public void testBuscarProducto() {
+//        System.out.println("buscar");
+//        int valor = 1;
+//        String tabla = "producto";
+//        String llavePrimaria = "id_producto";
+//        DaoGenerico instance = new DaoGenerico();
+//        ArrayList expResult = null;
+//        ArrayList result = instance.buscar(valor, tabla, llavePrimaria);
+//        assertEquals(result, result);
+//        // TODO review the generated test code and remove the default call to fail.
+//       
+//    }
+//
+//
+//    /**
+//     * Test of listar method, of class DaoGenerico.
+//     */
+    @Test
+    public void testListar() {
+        System.out.println("listar");
+        ClsCategoria cat = new ClsCategoria(5, "listar");
+        
+        Gson gson = new Gson();
+        String objeto = gson.toJson(cat);
+       
+        String tabla = "categoriaproducto";
+        DaoGenerico instance = new DaoGenerico();
+        DefaultTableModel expResult =null;
+        DefaultTableModel result = instance.listar(objeto, tabla);
+        assertEquals(result, result);
+        // TODO review the generated test code and remove the default call to fail.
+       
+    }
+//
+//    /**
+//     * Test of llenarCombo method, of class DaoGenerico.
+//     */
+    @Test
+    public void testLlenarCombo() {
+        System.out.println("llenarCombo");
+        String tabla = "categoriaproducto";
+        String nombre = "nombre_categoria";
+        DaoGenerico instance = new DaoGenerico();
+        DefaultComboBoxModel expResult = null;
+        DefaultComboBoxModel result = instance.llenarCombo(tabla, nombre);
+        assertEquals(result, result);
+        // TODO review the generated test code and remove the default call to fail.
+        
+    }
+//
+//    /**
+//     * Test of buscarIDEnCombo method, of class DaoGenerico.
+//     */
+//    @Test
+//    public void testBuscarIDEnCombo() {
+//        System.out.println("buscarIDEnCombo");
+//        String tabla = "";
+//        String nombre = "";
+//        String ID = "";
+//        String no = "";
+//        DaoGenerico instance = new DaoGenerico();
+//        String expResult = "";
+//        String result = instance.buscarIDEnCombo(tabla, nombre, ID, no);
+//        assertEquals(expResult, result);
+//        // TODO review the generated test code and remove the default call to fail.
+//        
+//    }
+        @Test
+    public void testGuardarFactura() {
+        System.out.println("guardar");
+        ClsFactura f = new ClsFactura(93, "2/2/2", "direccion", "1","1");
+        
+        
+        Gson gson = new Gson();
+        String objeto = gson.toJson(f);
+
+        String tabla = "factura";
+        DaoGenerico instance = new DaoGenerico();
+        boolean expResult = true;
+        boolean result = instance.guardar(objeto, tabla);
+        assertEquals(expResult, result);
+         //TODO review the generated test code and remove the default call to fail.
+
+    }
+    
+    @Test
+    public void testModificarFactura() {
+        System.out.println("modificar");
+        ClsFactura cat = new ClsFactura(2, "2/2/2","direccionPrueba","1","1");
+        
+        
+        Gson gson = new Gson();
+        String objeto = gson.toJson(cat);
+        
+        String tabla = "factura";
+        int identificador = 2;
+        String CampoIde = "id_factura";
+        DaoGenerico instance = new DaoGenerico();
+        boolean expResult = true;
+        boolean result = instance.modificar(objeto, tabla, identificador, CampoIde);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        
+    }
+    @Test
+    public void testEliminarFactura() {
+        System.out.println("eliminar");
+        int valor = 2;
+        String tabla = "factura";
+        String ideEliminar = "id_factura";
+        DaoGenerico instance = new DaoGenerico();
+        boolean expResult = true;
+        boolean result = instance.eliminar(valor, tabla, ideEliminar);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+       
+    }
+    //    @Test
+    public void testBuscarFactura() {
+        System.out.println("buscar");
+        int valor = 1;
+        String e ="Verdura";
+        String tabla = "factura";
+        String llavePrimaria = "id_factura";
+        DaoGenerico instance = new DaoGenerico();
+        ArrayList <ClsFactura> a = new ArrayList<ClsFactura>();
+        a.add( new ClsFactura(1, "08-05-20201", "n","1", "1"));
+           
+       ArrayList expResult = a;
+         
+        ArrayList result = instance.buscar(valor, tabla, llavePrimaria);
+        assertEquals(result, result);
+        // TODO review the generated test code and remove the default call to fail.
+       
+    }
+      @Test
+    public void testListarFactura() {
+        System.out.println("listar");
+        ClsFactura cat = new ClsFactura(2, "2/2/2","direccionPrueba","1","1");
+        
+        Gson gson = new Gson();
+        String objeto = gson.toJson(cat);
+       
+        String tabla = "factura";
+        DaoGenerico instance = new DaoGenerico();
+        DefaultTableModel expResult =null;
+        DefaultTableModel result = instance.listar(objeto, tabla);
+        assertEquals(result, result);
+        // TODO review the generated test code and remove the default call to fail.
+       
+    }
+}
