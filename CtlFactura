@@ -1,0 +1,107 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Controlador;
+
+import static Controlador.CtlProveedor.nombre;
+import static Controlador.CtlProveedor.tabla;
+import DAO.DaoGenerico;
+import Modelo.ClsFactura;
+import com.google.gson.Gson;
+import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.table.DefaultTableModel;
+
+/**
+ *
+ * @author PC
+ */
+public class CtlFactura {
+     public static String tabla = "factura ";
+    public static String nombre = "nombre_cliente";
+    public static String ID = "id_factura";
+    
+    public static String tabla2 = "cliente ";
+    public static String nombre2 = "nombre_cliente";
+    public static String ID2 = "id_cliente";
+    
+    public static String tabla3 = "vendedor ";
+    public static String nombre3 = "nombre_vendedor";
+    public static String ID3 = "id_vendedor";
+    
+    public static String tabla4 = "producto ";
+    public static String nombre4 = "nombre_producto";
+    public static String ID4= "id_producto";
+   
+    
+   
+   
+    public static ClsFactura p = new ClsFactura();
+
+    public String convertirGson(ClsFactura fa) {
+        Gson gson = new Gson();
+        String objeto = gson.toJson(fa);
+        return objeto;
+    }
+
+    public boolean SolicitudGuardarFactura(   String fecha_factura, String direccion_envio, String id_vendedor, String id_cliente) {
+        ClsFactura c = new ClsFactura( fecha_factura, direccion_envio, id_vendedor, id_cliente);
+        DaoGenerico proDAO = new DaoGenerico();
+        String objeto = convertirGson(c);
+        return proDAO.guardar(objeto, tabla);
+
+    }
+    
+    public boolean SolicitudModificar(int id_factura, String fecha_factura, String direccion_envio, String id_vendedor, String id_cliente) {
+
+        String Id= "id_factura";
+        ClsFactura au = new ClsFactura(id_factura, fecha_factura, direccion_envio, id_vendedor, id_cliente);
+        DaoGenerico usuDAO = new DaoGenerico();
+        String objeto = convertirGson(au);
+        return usuDAO.modificar(objeto, tabla,id_factura,Id);
+    }
+    
+      public ArrayList SolicitudBuscar(int id_factura) {
+        DaoGenerico productoDAO = new DaoGenerico();
+        return productoDAO.buscar(id_factura, tabla, ID);
+    }
+    public boolean SolicitudEliminar(int id) {
+
+        DaoGenerico DAO = new DaoGenerico();
+        return DAO.eliminar(id, tabla, ID);
+    }
+ public DefaultTableModel SolicitudListar() {
+        ClsFactura cliente = new ClsFactura();
+        String json = convertirGson(cliente);
+        DaoGenerico DAO = new DaoGenerico();
+        return DAO.listar(json, tabla);
+    
+    
+}
+  public String buscarIdCliente(String no) {
+        DaoGenerico DAO = new DaoGenerico();
+        return DAO.buscarIDEnCombo(tabla2, nombre2, ID2, no);
+    }
+   public String buscarIdVendedor(String no) {
+        DaoGenerico DAO = new DaoGenerico();
+        return DAO.buscarIDEnCombo(tabla3, nombre3, ID3, no);
+    }
+   public String buscarIdProducto(String no) {
+        DaoGenerico DAO = new DaoGenerico();
+        return DAO.buscarIDEnCombo(tabla4, nombre4, ID4, no);
+    }
+   public DefaultComboBoxModel solicitudListarC() {
+        DaoGenerico DAO = new DaoGenerico();
+        return DAO.llenarCombo(tabla2, nombre2);
+    }
+   public DefaultComboBoxModel solicitudListarV() {
+        DaoGenerico DAO = new DaoGenerico();
+        return DAO.llenarCombo(tabla3, nombre3);
+    }
+   public DefaultComboBoxModel solicitudListarP() {
+        DaoGenerico DAO = new DaoGenerico();
+        return DAO.llenarCombo(tabla4, nombre4);
+    }
+}
