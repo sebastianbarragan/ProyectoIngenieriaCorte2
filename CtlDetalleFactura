@@ -1,0 +1,63 @@
+public class CtlDetalleFactura {
+    
+     public static String tabla = "Detallefactura ";
+    public static String nombre = "nombre_cliente";
+    public static String ID = "id_detalle";
+    
+  
+    
+    public static String tabla2 = "producto ";
+    public static String nombre2 = "nombre_producto";
+    public static String ID2= "id_producto";
+   
+    
+   
+   
+    public static ClsDetalleFactura p = new ClsDetalleFactura();
+
+    public String convertirGson(ClsDetalleFactura fa) {
+        Gson gson = new Gson();
+        String objeto = gson.toJson(fa);
+        return objeto;
+    }
+
+    public boolean SolicitudGuardarDetalle( String id_producto, int cantidad, int precio  ) {
+        ClsDetalleFactura c = new ClsDetalleFactura( id_producto, cantidad, precio);
+        DaoGenerico proDAO = new DaoGenerico();
+        String objeto = convertirGson(c);
+        return proDAO.guardar(objeto, tabla);
+
+    }
+    
+  
+    public boolean SolicitudEliminar(int id) {
+
+        DaoGenerico DAO = new DaoGenerico();
+        return DAO.eliminar(id, tabla, ID);
+    }
+     public boolean SolicitudEliminarTodo() {
+        DaoGenerico DAO = new DaoGenerico();
+        return DAO.eliminarTodo(tabla);
+    }
+ public DefaultTableModel SolicitudListar() {
+        ClsDetalleFactura d = new ClsDetalleFactura();
+        String json = convertirGson(d);
+        DaoGenerico DAO = new DaoGenerico();
+        return DAO.listar(json, tabla);
+    
+    
+}
+   public String buscarIdProducto(String no) {
+        DaoGenerico DAO = new DaoGenerico();
+        return DAO.buscarIDEnCombo(tabla2, nombre2, ID2, no);
+    }
+   public DefaultComboBoxModel solicitudListarP() {
+        DaoGenerico DAO = new DaoGenerico();
+        return DAO.llenarCombo(tabla2, nombre2);
+    }
+   public DefaultComboBoxModel solicitudListari() {
+        DaoGenerico DAO = new DaoGenerico();
+        return DAO.llenarCombo(tabla, ID);
+    }
+
+}
