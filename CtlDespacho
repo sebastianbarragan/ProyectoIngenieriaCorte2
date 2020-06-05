@@ -1,0 +1,61 @@
+public class CtlDespacho {
+    
+     public static String tabla = "Despacho ";
+    
+    public static String ID = "id_Despacho";
+    
+  
+    
+    public static String tabla2 = "DetalleG ";
+
+    public static String ID2= "id_detalle2";
+   
+    
+   
+   
+    
+
+    public String convertirGson(ClsDespacho fa) {
+        Gson gson = new Gson();
+        String objeto = gson.toJson(fa);
+        return objeto;
+    }
+
+    public boolean SolicitudGuardarDespacho( String fecha_despacho, String id_detalleG ) {
+        ClsDespacho c = new ClsDespacho( fecha_despacho, id_detalleG);
+        DaoGenerico proDAO = new DaoGenerico();
+        String objeto = convertirGson(c);
+        return proDAO.guardar(objeto, tabla);
+
+    }
+    
+  
+    public boolean SolicitudEliminar(int id) {
+
+        DaoGenerico DAO = new DaoGenerico();
+        return DAO.eliminar(id, tabla, ID);
+    }
+     public boolean SolicitudEliminarTodo() {
+        DaoGenerico DAO = new DaoGenerico();
+        return DAO.eliminarTodo(tabla);
+    }
+ public DefaultTableModel SolicitudListar() {
+        ClsDespacho d = new ClsDespacho();
+        String json = convertirGson(d);
+        DaoGenerico DAO = new DaoGenerico();
+        return DAO.listar(json, tabla);
+    
+    
+}
+   public String buscarIdDetalle(String no) {
+        DaoGenerico DAO = new DaoGenerico();
+        return DAO.buscarIDEnCombo(tabla2, ID2, ID2, no);
+    }
+   public DefaultComboBoxModel solicitudListarD() {
+        DaoGenerico DAO = new DaoGenerico();
+        return DAO.llenarCombo(tabla2, ID2);
+    }
+  
+    
+    
+}
