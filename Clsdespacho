@@ -1,0 +1,37 @@
+public class ClsDespacho {
+    
+   int id_Despacho;
+   String fecha_despacho="";
+   String id_detalle2="";
+
+    public ClsDespacho() {
+    }
+
+    public ClsDespacho(String fecha_despacho, String id_detalle2) {
+        this.fecha_despacho = fecha_despacho;
+        this.id_detalle2 = id_detalle2;
+    }
+
+    public int getId_Despacho() {
+        return id_Despacho;
+    }
+
+    public void setId_Despacho(int id_Despacho) {
+        this.id_Despacho = id_Despacho;
+    }
+
+    public String getFecha_despacho() {
+        return fecha_despacho;
+    }
+
+    public void setFecha_despacho(String fecha_despacho) {
+        this.fecha_despacho = fecha_despacho;
+    }
+
+    public String getId_detalle2() {
+        return id_detalle2;
+    }
+
+    public void setId_detalle2(String id_detalle2) {
+        this.id_detalle2 = id_detalle2;
+    }
